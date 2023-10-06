@@ -3,7 +3,8 @@ import { TIMER_ACTION_TYPES } from "./timer.types";
 const INITIAL_STATE = {
     currentHours: 0,
     currentMinutes: 0,
-    currentSeconds: 0
+    currentSeconds: 0,
+    isTimerRunning: false
 }
 
 export const timerReducer = (state= INITIAL_STATE, action) => {
@@ -16,6 +17,10 @@ export const timerReducer = (state= INITIAL_STATE, action) => {
             return { ...state, currentMinutes: payload }
         case TIMER_ACTION_TYPES.SET_CURRENT_SECONDS:
             return { ...state, currentSeconds: payload }
+        case TIMER_ACTION_TYPES.START_TIMER:
+            return {
+                ...state, isTimerRunning: payload
+            }
         default:
             return state;
     }

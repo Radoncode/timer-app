@@ -21,3 +21,10 @@ export const setCurrentSeconds =  (seconds) => {
         'payload': seconds
     }
 }
+
+export const setStartTimer = (bool) => {
+    return {
+        'type' : TIMER_ACTION_TYPES.START_TIMER,
+        'payload': bool
+    }
+}

@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 //import { useRef } from 'react';
 
-import { setCurrentHours, setCurrentMinutes, setCurrentSeconds } from './store/timer/timer.action';
+import { setCurrentHours, setCurrentMinutes, setCurrentSeconds, setStartTimer } from './store/timer/timer.action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 function App() {
 
@@ -13,8 +14,40 @@ function App() {
   const currentHours = useSelector((state) => state.timer.currentHours)
   const currentMinutes = useSelector((state) => state.timer.currentMinutes)
   const currentSeconds = useSelector((state) => state.timer.currentSeconds)
+  const isTimerRunning = useSelector((state) => state.timer.isTimerRunning)
   
   //const hour = useRef(null);
+
+  useEffect(() => {
+    let timerInterval;
+    if (isTimerRunning) {
+      console.log('enter setInterval', currentSeconds)
+      timerInterval = setInterval(() => {
+        if (currentSeconds !== 0){
+          dispatch(setCurrentSeconds(currentSeconds - 1))
+        } else {
+          if (currentSeconds === 0) {
+            if (currentMinutes !== 0){
+              dispatch(setCurrentMinutes(currentMinutes - 1))
+            } else {
+              if (currentHours === 0) {
+                dispatch(setCurrentHours(23))
+              } else {
+                dispatch(setCurrentHours(currentHours - 1))
+              }
+              dispatch(setCurrentMinutes(59))
+            }
+            dispatch(setCurrentSeconds(59))          
+          }
+        }
+        
+        
+        
+      },1000);
+      console.log('exit set interval',currentSeconds)
+      return () => clearInterval(timerInterval);
+    }
+  }, [isTimerRunning, currentSeconds])
 
   const handleClickHourUp = () => {
     if (currentHours === 23){
@@ -65,12 +98,9 @@ function App() {
   }
 
   const handleClickStart = () => {
-    console.log('test')
+    dispatch(setStartTimer(true))
   }
 
-  /*const handleClick = () => {
-    clearInterval(hour.current);
-  }*/
 
   return (
     <div className="container mx-auto px-4 text-center">

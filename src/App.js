@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 //import { useRef } from 'react';
 
-import { setCurrentHours, setCurrentMinutes, setCurrentSeconds, setStartTimer } from './store/timer/timer.action';
+import { setCurrentHours, setCurrentMinutes, setCurrentSeconds, setStartTimer, setPauseTimer, setResumeTimer } from './store/timer/timer.action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -15,13 +15,14 @@ function App() {
   const currentMinutes = useSelector((state) => state.timer.currentMinutes)
   const currentSeconds = useSelector((state) => state.timer.currentSeconds)
   const isTimerRunning = useSelector((state) => state.timer.isTimerRunning)
+  const isTimerPause = useSelector((state) => state.timer.isTimerPause)
+  const isTimerResume = useSelector((state) => state.timer.isTimerResume)
   
   //const hour = useRef(null);
 
   useEffect(() => {
     let timerInterval;
     if (isTimerRunning) {
-      console.log('enter setInterval', currentSeconds)
       timerInterval = setInterval(() => {
         if (currentSeconds !== 0){
           dispatch(setCurrentSeconds(currentSeconds - 1))
@@ -39,12 +40,8 @@ function App() {
             }
             dispatch(setCurrentSeconds(59))          
           }
-        }
-        
-        
-        
+        }  
       },1000);
-      console.log('exit set interval',currentSeconds)
       return () => clearInterval(timerInterval);
     }
   }, [isTimerRunning, currentSeconds])
@@ -98,9 +95,56 @@ function App() {
   }
 
   const handleClickStart = () => {
-    dispatch(setStartTimer(true))
+    if(isTimerRunning === false){
+      dispatch(setStartTimer(true))
+      dispatch(setPauseTimer(false))
+      dispatch(setResumeTimer(false))
+    } 
+  }
+  
+  // if the timer is in pause, I change the button to resume and I pause the timer
+  const handleClickPause = () => {
+    if(isTimerPause === false){ // isTimerPause: TRUE
+      dispatch(setPauseTimer(true))
+      dispatch(setResumeTimer(false))
+      dispatch(setStartTimer(false))
+    } 
   }
 
+  const handleClickCancel = () => {
+    dispatch(setCurrentHours(0))
+    dispatch(setCurrentMinutes(0))
+    dispatch(setCurrentSeconds(0))
+    dispatch(setPauseTimer(false))
+    dispatch(setResumeTimer(false))
+    dispatch(setStartTimer(false))
+  }
+
+  const buttonTimer = () => {
+    if(isTimerRunning && !isTimerPause && !isTimerResume) {
+      return (
+        <button className="bg-[#332003] text-[#f0a22e] p-4 ml-4 rounded-full hover:ring-4" onClick={handleClickPause}>
+            Pause
+        </button>
+      )
+    } else if (!isTimerRunning && isTimerPause && !isTimerResume) {
+      return (
+        <button className="bg-[#332003] text-[#f0a22e] p-4 ml-4 rounded-full hover:ring-4" onClick={handleClickStart}>
+            Resume
+        </button>
+      )
+    } else {
+      return (
+        <button className="bg-[#263e28] text-[#8ac889] p-4 ml-4 rounded-full hover:ring-4" onClick={handleClickStart}>
+               Start
+        </button>
+      )
+    }
+  }
+
+  console.log('timer pause',isTimerPause)
+  console.log('timer resume',isTimerResume)
+  console.log('timer runnning',isTimerRunning)
 
   return (
     <div className="container mx-auto px-4 text-center">
@@ -125,12 +169,10 @@ function App() {
         </div>
       </div>
       <div className="flex justify-center space-x-20 mt-4">
-          <button className="bg-[#171717] text-[#8a8a8c] p-4 ml-4 rounded-full hover:ring-4" >
+          <button className="bg-[#171717] text-[#8a8a8c] p-4 ml-4 rounded-full hover:ring-4" onClick={handleClickCancel} >
             Cancel
           </button>
-          <button className="bg-[#263e28] text-[#8ac889] p-4 ml-4 rounded-full hover:ring-4" onClick={handleClickStart}>
-            Start
-          </button>
+          { buttonTimer() }
       </div>
     </div>
   );

@@ -28,3 +28,17 @@ export const setStartTimer = (bool) => {
         'payload': bool
     }
 }
+
+export const setPauseTimer = (bool) => {
+    return {
+        'type' : TIMER_ACTION_TYPES.PAUSE_TIMER,
+        'payload': bool
+    }
+}
+
+export const setResumeTimer = (bool) => {
+    return {
+        'type' : TIMER_ACTION_TYPES.RESUME_TIMER,
+        'payload': bool
+    }
+}

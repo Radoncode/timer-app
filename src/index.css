@@ -25,34 +25,70 @@ code {
   left: 7px;
 }
 
+.icon-hours-position-up-one-digit {
+  position: absolute;
+  top: -61px;
+  left: -12px;
+}
+
 .icon-hours-position-down {
   position: absolute;
   bottom: -68px;
   right: 210px;
 }
 
+.icon-hours-position-down-one-digit {
+  position: absolute;
+  bottom: -68px;
+  right: 193px;
+}
+
 .icon-min-position-up {
   position: absolute;
-  top: 22px;
-  right: 512px;
+  top: -59px;
+  right: 145px;
+}
+
+.icon-min-position-up-one-digit {
+  position: absolute;
+  top: -60px;
+  right: 130px;
 }
 
 .icon-min-position-down {
   position: absolute;
-  bottom: 16px;
-  right: 507px;
+  bottom: -67px;
+  right: 143px;
+}
+
+.icon-min-position-down-one-digit {
+  position: absolute;
+  bottom: -62px;
+  right: 127px;
 }
 
 .icon-seconds-position-up {
   position: absolute;
-  top: 23px;
-  right: 210px;
+  top: -54px;
+  right: 130px;
+}
+
+.icon-seconds-position-up-one-digit {
+  position: absolute;
+  top: -57px;
+  right: 114px;
 }
 
 .icon-seconds-position-down {
   position: absolute;
-  bottom: 13px;
-  right: 208px;
+  bottom: -61px;
+  right: 127px;
+}
+
+.icon-seconds-position-down-one-digit {
+  position: absolute;
+  bottom: -60px;
+  right: 111px;
 }
 
 .custom-hover-cancel:hover {

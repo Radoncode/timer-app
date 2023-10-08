@@ -129,7 +129,7 @@ function App() {
       )
     } else if (!isTimerRunning && isTimerPause && !isTimerResume) {
       return (
-        <button className="bg-[#332003] text-[#f0a22e] p-4 ml-4 rounded-full hover:ring-4" onClick={handleClickStart}>
+        <button className="bg-[#263e28] text-[#8ac889] p-4 ml-4 rounded-full hover:ring-4" onClick={handleClickStart}>
             Resume
         </button>
       )
@@ -152,19 +152,19 @@ function App() {
       <div className="mt-10 box shadow inline-block">
         <div className="flex  items-center space-x-20 text-white bg-black border-counter text-7xl p-20 rounded-[35px]">
           <div className="flex justify-center flex-col items-center relative">
-            <FontAwesomeIcon className='icon-hours-position-up' icon={faAngleUp} onClick={handleClickHourUp} />
+            <FontAwesomeIcon className={(currentHours < 10) ? 'icon-hours-position-up-one-digit' : 'icon-hours-position-up'} icon={faAngleUp} onClick={handleClickHourUp} />
             <span> {currentHours} hours</span>
-            <FontAwesomeIcon className='icon-hours-position-down' icon={faAngleDown} onClick={handleClickHourDown} />
+            <FontAwesomeIcon className={(currentHours < 10) ? 'icon-hours-position-down-one-digit' : 'icon-hours-position-down'} icon={faAngleDown} onClick={handleClickHourDown} />
           </div>
-          <div className="flex flex-col items-center">
-            <FontAwesomeIcon className='icon-min-position-up' icon={faAngleUp} onClick={handleClickMinuteUp} />
+          <div className="flex justify-center flex-col items-center relative">
+            <FontAwesomeIcon className={(currentMinutes < 10) ? 'icon-min-position-up-one-digit' : 'icon-min-position-up'} icon={faAngleUp} onClick={handleClickMinuteUp} />
             <span>{currentMinutes} min</span>
-            <FontAwesomeIcon className='icon-min-position-down' icon={faAngleDown} onClick={handleClickMinuteDown} />
+            <FontAwesomeIcon className={(currentMinutes < 10) ? 'icon-min-position-down-one-digit' : 'icon-min-position-down'} icon={faAngleDown} onClick={handleClickMinuteDown} />
           </div>
-          <div className="flex flex-col items-center">
-            <FontAwesomeIcon className='icon-seconds-position-up' icon={faAngleUp} onClick={handleClickSecondUp} />
+          <div className="flex justify-center flex-col items-center relative">
+            <FontAwesomeIcon className={(currentSeconds < 10) ? 'icon-seconds-position-up-one-digit' : 'icon-seconds-position-up'} icon={faAngleUp} onClick={handleClickSecondUp} />
             <span>{currentSeconds} sec</span>
-            <FontAwesomeIcon className='icon-seconds-position-down' icon={faAngleDown} onClick={handleClickSecondDown} />
+            <FontAwesomeIcon className={(currentSeconds < 10) ? 'icon-seconds-position-down-one-digit' : 'icon-seconds-position-down'} icon={faAngleDown} onClick={handleClickSecondDown} />
           </div>
         </div>
       </div>
